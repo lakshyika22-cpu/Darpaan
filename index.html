@@ -1,0 +1,1728 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f8f2">
+  <title>Darpaan — Your Speaking Practice Studio</title>
+
+  <style>
+    :root {
+      --bg: #f7f8f2;
+      --surface: #ffffff;
+      --green: #245b45;
+      --green-dark: #173f30;
+      --green-soft: #e8f1e8;
+      --text: #202b25;
+      --muted: #707a72;
+      --border: #e2e8df;
+      --orange: #c47a48;
+      --red: #b64d43;
+      --radius: 20px;
+      --shadow: 0 5px 24px rgba(31, 63, 43, .045);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      width: 100%;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      line-height: 1.65;
+    }
+
+    button, input, textarea, select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:focus-visible,
+    textarea:focus-visible,
+    input:focus-visible {
+      outline: 3px solid #a8cbb0;
+      outline-offset: 3px;
+    }
+
+    .topbar {
+      width: 100%;
+      padding: 17px clamp(18px, 3vw, 48px);
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,.9);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 21px;
+      letter-spacing: -.7px;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: var(--green);
+      color: white;
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+    }
+
+    .top-label {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1800px;
+      margin: 0 auto;
+      padding: 30px clamp(18px, 3vw, 48px) 70px;
+    }
+
+    .hero {
+      padding: clamp(26px, 4vw, 58px);
+      border-radius: 28px;
+      background: var(--green);
+      color: white;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 26px;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 50%;
+      right: -65px;
+      top: -130px;
+      box-shadow: 0 0 0 35px rgba(255,255,255,.035),
+                  0 0 0 75px rgba(255,255,255,.025);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 11px;
+      font-weight: 800;
+      opacity: .78;
+    }
+
+    .hero h1 {
+      margin: 12px 0 12px;
+      max-width: 900px;
+      font-size: clamp(32px, 4vw, 54px);
+      letter-spacing: -1.8px;
+      line-height: 1.12;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 780px;
+      color: #e2ede4;
+      font-size: clamp(15px, 1.4vw, 18px);
+    }
+
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 25px;
+    }
+
+    .pill {
+      border: 1px solid rgba(255,255,255,.22);
+      background: rgba(255,255,255,.09);
+      border-radius: 30px;
+      padding: 7px 13px;
+      font-size: 12px;
+    }
+
+    .section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: clamp(20px, 2.5vw, 34px);
+      margin-bottom: 22px;
+      box-shadow: var(--shadow);
+      min-width: 0;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .section-number {
+      flex-shrink: 0;
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      background: var(--green-soft);
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    h2 {
+      font-size: clamp(20px, 2vw, 26px);
+      line-height: 1.25;
+      letter-spacing: -.5px;
+      margin: 0 0 5px;
+    }
+
+    h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+
+    .subtext {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .field-label {
+      display: block;
+      font-weight: 700;
+      font-size: 13px;
+      margin-bottom: 7px;
+    }
+
+    .field {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: #fcfdf9;
+      border-radius: 12px;
+      padding: 12px 14px;
+      color: var(--text);
+    }
+
+    .field:focus {
+      border-color: #87ae91;
+      outline: 2px solid #e2efe3;
+    }
+
+    textarea.field {
+      resize: vertical;
+      min-height: 145px;
+      line-height: 1.75;
+    }
+
+    .topic-input {
+      margin-bottom: 20px;
+    }
+
+    .record-panel {
+      background: #f7faf5;
+      border: 1px solid var(--border);
+      padding: clamp(18px, 2.5vw, 30px);
+      border-radius: 18px;
+    }
+
+    .record-status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #9aa49b;
+      flex-shrink: 0;
+    }
+
+    .status-dot.live {
+      background: #d74c42;
+      box-shadow: 0 0 0 5px #f9e5e2;
+      animation: pulse 1.3s infinite;
+    }
+
+    @keyframes pulse {
+      50% { box-shadow: 0 0 0 9px rgba(215,76,66,.08); }
+    }
+
+    .timer {
+      font-size: clamp(34px, 5vw, 54px);
+      font-weight: 800;
+      letter-spacing: 2px;
+      line-height: 1.2;
+      margin: 10px 0 22px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .btn {
+      border: 1px solid transparent;
+      border-radius: 11px;
+      padding: 11px 17px;
+      font-weight: 750;
+      font-size: 14px;
+      transition: transform .15s, background .15s;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: var(--green);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--green-dark);
+    }
+
+    .btn-secondary {
+      color: var(--green);
+      background: white;
+      border-color: #cddbd0;
+    }
+
+    .btn-light {
+      background: var(--green-soft);
+      color: var(--green-dark);
+    }
+
+    .btn-danger {
+      background: #fff0ed;
+      color: #a33f35;
+      border-color: #f0d1cb;
+    }
+
+    .btn:disabled {
+      opacity: .45;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .notice {
+      padding: 13px 15px;
+      background: #fff8e9;
+      border: 1px solid #f0e4c9;
+      color: #705d36;
+      border-radius: 12px;
+      font-size: 13px;
+      margin-top: 16px;
+    }
+
+    .audio-player {
+      width: 100%;
+      margin-top: 16px;
+    }
+
+    .upload-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    input[type="file"] {
+      max-width: 100%;
+      font-size: 13px;
+    }
+
+    .divider {
+      border: 0;
+      border-top: 1px solid var(--border);
+      margin: 25px 0;
+    }
+
+    .transcript-tools {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 10px;
+    }
+
+    .word-counter {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .analysis-intro {
+      padding: 17px 19px;
+      background: #f3f7ef;
+      border-radius: 13px;
+      margin-bottom: 20px;
+      color: #47594a;
+      font-size: 14px;
+    }
+
+    .score-panel {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 26px;
+      background: var(--green);
+      color: white;
+      border-radius: 18px;
+      padding: clamp(22px, 3vw, 34px);
+      margin-bottom: 24px;
+    }
+
+    .score-circle {
+      width: 112px;
+      height: 112px;
+      flex-shrink: 0;
+      border: 6px solid rgba(255,255,255,.24);
+      border-top-color: #e6d9a4;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      align-content: center;
+    }
+
+    .score-value {
+      font-size: 35px;
+      font-weight: 850;
+      line-height: 1;
+    }
+
+    .score-out-of {
+      font-size: 12px;
+      opacity: .75;
+      margin-top: 5px;
+    }
+
+    .score-copy {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .score-copy h3 {
+      font-size: 22px;
+      margin-bottom: 7px;
+    }
+
+    .score-copy p {
+      margin: 0;
+      color: #e1eee3;
+      font-size: 14px;
+    }
+
+    .metric-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .metric {
+      display: grid;
+      grid-template-columns: minmax(150px, 1fr) minmax(100px, 2fr) 100px;
+      align-items: center;
+      gap: 18px;
+      padding: 15px 0;
+      border-bottom: 1px solid #edf0e9;
+    }
+
+    .metric:last-child {
+      border-bottom: 0;
+    }
+
+    .metric-name {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .metric-detail {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .bar {
+      height: 9px;
+      border-radius: 20px;
+      background: #edf1e9;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      width: 0;
+      border-radius: inherit;
+      background: #659572;
+      transition: width .45s ease;
+    }
+
+    .metric-value {
+      text-align: right;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .report-block {
+      margin-top: 25px;
+    }
+
+    .report-block > h3 {
+      margin-bottom: 12px;
+    }
+
+    .feedback-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .feedback-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 15px;
+    }
+
+    .feedback-icon {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: var(--green-soft);
+    }
+
+    .feedback-item p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }
+
+    .feedback-item strong {
+      font-size: 14px;
+    }
+
+    .feedback-item.good .feedback-icon {
+      background: #e5f4e8;
+    }
+
+    .feedback-item.warn .feedback-icon {
+      background: #fff0d8;
+    }
+
+    .feedback-item.alert .feedback-icon {
+      background: #fde9e5;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .tag {
+      background: #f0f4ed;
+      color: #4d5e4d;
+      padding: 6px 10px;
+      border-radius: 9px;
+      font-size: 12px;
+      overflow-wrap: anywhere;
+    }
+
+    .empty-state {
+      padding: 20px;
+      border: 1px dashed #d4ded1;
+      background: #fafcf8;
+      border-radius: 12px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .goal-list {
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+
+    .goal {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 13px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 14px;
+    }
+
+    .goal input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--green);
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+
+    .goal.done {
+      background: #f2f8f0;
+      color: #607365;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      padding: 15px 0 0;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (min-width: 1400px) {
+      .page {
+        padding-left: 52px;
+        padding-right: 52px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .topbar {
+        padding: 13px 17px;
+      }
+
+      .top-label {
+        display: none;
+      }
+
+      .page {
+        padding: 18px 13px 40px;
+      }
+
+      .hero {
+        padding: 27px 22px;
+        border-radius: 20px;
+      }
+
+      .section {
+        padding: 19px 15px;
+        border-radius: 16px;
+      }
+
+      .score-panel {
+        gap: 18px;
+      }
+
+      .score-circle {
+        width: 88px;
+        height: 88px;
+      }
+
+      .score-value {
+        font-size: 28px;
+      }
+
+      .metric {
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 9px;
+      }
+
+      .metric .bar {
+        grid-column: 1 / -1;
+        grid-row: 2;
+      }
+
+      .metric-value {
+        grid-column: 2;
+        grid-row: 1;
+      }
+
+      .button-row .btn {
+        flex: 1 1 auto;
+      }
+
+      .brand {
+        font-size: 19px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
+    /* Darpaan account + dashboard */
+    .hidden { display:none !important; }
+    .auth-screen{min-height:100vh;display:grid;place-items:center;padding:28px 16px;background:radial-gradient(circle at 15% 15%,#e7f0e5 0,transparent 34%),radial-gradient(circle at 90% 85%,#f4e9dc 0,transparent 30%),var(--bg)}
+    .auth-wrap{width:min(980px,100%);display:grid;grid-template-columns:1fr 420px;background:#fff;border:1px solid var(--border);border-radius:26px;overflow:hidden;box-shadow:0 22px 70px #173f3014}
+    .auth-story{padding:clamp(28px,5vw,58px);background:var(--green);color:#fff;display:flex;flex-direction:column;justify-content:space-between;min-height:560px;position:relative;overflow:hidden}
+    .auth-story:after{content:"";position:absolute;width:310px;height:310px;border:1px solid #ffffff2a;border-radius:50%;right:-120px;bottom:-120px;box-shadow:0 0 0 35px #ffffff0b,0 0 0 75px #ffffff08}
+    .auth-brand{display:flex;align-items:center;gap:11px;font-size:21px;font-weight:850;letter-spacing:-.6px;position:relative;z-index:1}
+    .auth-brand-mark{width:42px;height:42px;border-radius:14px;background:#ffffff20;display:grid;place-items:center;font-size:21px}
+    .auth-story-copy{position:relative;z-index:1;max-width:430px}.auth-story-copy .eyebrow{color:#dcebdd}.auth-story-copy h1{font-size:clamp(34px,4vw,49px);line-height:1.1;letter-spacing:-1.8px;margin:15px 0}.auth-story-copy p{color:#e2ede4;line-height:1.8;font-size:15px}
+    .auth-points{display:grid;gap:12px;margin-top:26px}.auth-point{display:flex;gap:10px;align-items:center;color:#e9f1e9;font-size:13px}.auth-point span:first-child{width:25px;height:25px;display:grid;place-items:center;border-radius:8px;background:#ffffff1c}
+    .auth-form-side{padding:clamp(25px,4vw,42px);display:flex;flex-direction:column;justify-content:center}.auth-form-side h2{font-size:27px;letter-spacing:-.8px;margin:0 0 7px}.auth-form-side .subtext{margin-bottom:25px}.auth-tabs{display:flex;background:#f1f5ef;padding:4px;border-radius:11px;margin-bottom:22px}.auth-tab{flex:1;border:0;background:transparent;border-radius:8px;padding:10px;color:var(--muted);font-weight:750}.auth-tab.active{background:#fff;color:var(--green);box-shadow:0 2px 8px #183c2910}.auth-field{margin-bottom:15px}.auth-field label{display:block;font-size:12px;font-weight:750;margin-bottom:7px}.auth-field input{width:100%;padding:12px 13px;border:1px solid var(--border);border-radius:11px;background:#fcfdf9;outline:none}.auth-field input:focus{border-color:#87ae91;box-shadow:0 0 0 3px #245b4514}.auth-message{min-height:20px;color:var(--red);font-size:12px;margin:2px 0 10px}.auth-submit{width:100%;padding:13px}
+    .topbar{position:sticky;top:0;z-index:10;backdrop-filter:blur(12px)}.top-actions{display:flex;align-items:center;gap:10px}.top-actions .btn{padding:9px 13px}.user-chip{font-size:12px;color:var(--green);font-weight:750;background:var(--green-soft);padding:8px 11px;border-radius:30px}
+    .dashboard{background:#fff;border:1px solid var(--border);border-radius:22px;padding:clamp(20px,3vw,32px);margin-bottom:24px;box-shadow:var(--shadow)}.dash-head{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;margin-bottom:23px}.dash-head h2{font-size:25px;margin:0 0 5px;letter-spacing:-.7px}.dash-grid{display:grid;grid-template-columns:1.25fr 1fr 1fr 1fr;gap:13px}.dash-card{border:1px solid var(--border);border-radius:15px;padding:17px;min-width:0}.dash-card.primary-card{background:var(--green);color:#fff;border-color:var(--green)}.dash-card .dash-label{font-size:11px;color:var(--muted);font-weight:700}.dash-card.primary-card .dash-label{color:#dcebdd}.dash-number{font-size:30px;font-weight:850;letter-spacing:-1px;margin:7px 0 2px}.dash-card small{font-size:11px;color:var(--muted)}.dash-card.primary-card small{color:#e0ebe2}.streak-emoji{font-size:21px}.week-row{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:17px}.day-cell{text-align:center;font-size:10px;color:var(--muted)}.day-dot{width:31px;height:31px;border-radius:50%;display:grid;place-items:center;margin:7px auto 0;background:#f0f3ed;color:#9aa49b;font-size:12px;font-weight:800}.day-dot.done{background:#dcebe3;color:var(--green)}.day-dot.today{outline:2px solid #c47a48;outline-offset:2px}.dash-bottom{display:grid;grid-template-columns:1.15fr .85fr;gap:15px;margin-top:15px}.dash-panel{border:1px solid var(--border);border-radius:15px;padding:18px}.dash-panel h3{font-size:14px;margin:0 0 14px}.activity-list{display:grid;gap:10px}.activity-item{display:flex;justify-content:space-between;gap:10px;padding-bottom:10px;border-bottom:1px solid #edf0e9;font-size:12px}.activity-item:last-child{border:0;padding-bottom:0}.activity-item strong{display:block;font-size:12px}.activity-item span{color:var(--muted);font-size:11px}.dash-empty{font-size:12px;color:var(--muted);line-height:1.6;padding:10px 0}.dash-tip{background:#f4f7f1;border-radius:11px;padding:13px;font-size:12px;line-height:1.65;color:#526454}.dash-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+    @media(max-width:850px){.auth-wrap{grid-template-columns:1fr 390px}.dash-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:680px){.auth-wrap{grid-template-columns:1fr}.auth-story{min-height:260px;padding:25px}.auth-story-copy{margin-top:35px}.auth-story-copy h1{font-size:34px}.auth-points{display:none}.top-actions{gap:6px}.top-actions .user-chip{display:none}.top-actions .btn{font-size:11px;padding:8px}.dash-head{flex-direction:column}.dash-bottom{grid-template-columns:1fr}.dash-grid{grid-template-columns:repeat(2,1fr)}}
+
+  </style>
+</head>
+
+<body>
+  <section class="auth-screen" id="authScreen">
+    <div class="auth-wrap">
+      <div class="auth-story">
+        <div class="auth-brand"><span class="auth-brand-mark">D</span> Darpaan</div>
+        <div class="auth-story-copy"><div class="eyebrow">YOUR PERSONAL SPEAKING SPACE</div><h1>Find your voice.<br>Build your confidence.</h1><p>A little practice every day can change the way you express yourself. Track your progress, build a streak and become a clearer speaker.</p><div class="auth-points"><div class="auth-point"><span>🎙</span><span>Record, practise and review your speech</span></div><div class="auth-point"><span>📈</span><span>See your growth in one simple dashboard</span></div><div class="auth-point"><span>🔥</span><span>Keep showing up with daily streaks</span></div></div></div>
+        <div style="font-size:11px;color:#dcebdd;position:relative;z-index:1">Practice · Reflect · Improve</div>
+      </div>
+      <div class="auth-form-side"><h2 id="authTitle">Welcome to Darpaan</h2><p class="subtext" id="authSubtitle">Sign in to continue your speaking journey.</p>
+        <div class="auth-tabs"><button class="auth-tab active" id="loginTab" type="button">Log in</button><button class="auth-tab" id="signupTab" type="button">Create account</button></div>
+        <form id="authForm"><div class="auth-field hidden" id="nameField"><label for="authName">Your name</label><input id="authName" autocomplete="name" placeholder="Enter your name"></div><div class="auth-field"><label for="authEmail">Email address</label><input id="authEmail" type="email" autocomplete="email" placeholder="you@example.com" required></div><div class="auth-field"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="current-password" placeholder="At least 6 characters" minlength="6" required></div><div class="auth-message" id="authMessage" aria-live="polite"></div><button class="btn btn-primary auth-submit" id="authSubmit" type="submit">Log in to Darpaan →</button></form>
+        <p class="auth-foot">This starter version saves your account and practice history in this browser only. Use the same browser and device to continue your streak.</p>
+      </div>
+    </div>
+  </section>
+  <div id="appShell" class="hidden">
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-icon">D</div>
+      <span>Darpaan</span>
+    </div>
+    <div class="top-actions"><span class="user-chip" id="userChip">Your workspace</span><button class="btn btn-secondary" type="button" onclick="document.getElementById('dashboard').scrollIntoView({behavior:'smooth'})">Dashboard</button><button class="btn btn-light" type="button" id="logoutBtn">Log out</button></div>
+  </header>
+
+  <main class="page">
+    <section class="dashboard" id="dashboard">
+      <div class="dash-head"><div><div class="eyebrow" style="color:var(--orange)">YOUR PROGRESS</div><h2 id="welcomeTitle">Welcome back!</h2><p class="subtext">A quick look at your speaking practice and consistency.</p></div><button class="btn btn-primary" type="button" onclick="document.getElementById('practice').scrollIntoView({behavior:'smooth'})">＋ Start practising</button></div>
+      <div class="dash-grid"><div class="dash-card primary-card"><div class="dash-label"><span class="streak-emoji">🔥</span> CURRENT STREAK</div><div class="dash-number" id="currentStreak">0 days</div><small id="streakCaption">Start a practice today to begin.</small></div><div class="dash-card"><div class="dash-label">TOTAL SESSIONS</div><div class="dash-number" id="totalSessions">0</div><small>Completed practices</small></div><div class="dash-card"><div class="dash-label">BEST STREAK</div><div class="dash-number" id="bestStreak">0</div><small>Days in a row</small></div><div class="dash-card"><div class="dash-label">AVERAGE SCORE</div><div class="dash-number" id="averageScore">—</div><small>Across your reports</small></div></div>
+      <div class="dash-bottom"><div class="dash-panel"><h3>Your weekly consistency</h3><p class="subtext">Complete at least one analysed practice in a day to keep your streak alive.</p><div class="week-row" id="weekRow"></div></div><div class="dash-panel"><h3>Recent practice</h3><div class="activity-list" id="activityList"><div class="dash-empty">Your completed sessions will appear here after you analyse your first speech.</div></div><div class="dash-actions"><span class="dash-tip">💡 Tip: Even a 2-minute practice is a good step. Consistency matters more than perfection.</span></div></div></div>
+    </section>
+
+    <section class="hero">
+      <div class="eyebrow">Practice · Reflect · Improve</div>
+      <h1>Speak with more clarity.<br>Show up with confidence.</h1>
+      <p>
+        Practise a speech, prepare for an interview, or work on your
+        communication skills. Review your transcript and get practical
+        suggestions for your next attempt.
+      </p>
+      <div class="hero-pills">
+        <span class="pill">🎙 Speaking practice</span>
+        <span class="pill">✍️ Transcript review</span>
+        <span class="pill">📈 Progress insights</span>
+      </div>
+    </section>
+
+    <section class="section" id="practice">
+      <div class="section-heading">
+        <div class="section-number">01</div>
+        <div>
+          <h2>Your practice session</h2>
+          <p class="subtext">Choose a topic, record yourself, and review what you said.</p>
+        </div>
+      </div>
+
+      <div class="topic-input">
+        <label class="field-label" for="topic">What are you practising today?</label>
+        <input class="field" id="topic"
+          placeholder="e.g. College introduction, group discussion, interview..."
+          maxlength="160">
+      </div>
+
+      <div class="record-panel">
+        <div class="record-status">
+          <span class="status-dot" id="statusDot"></span>
+          <span id="statusText" aria-live="polite">Ready when you are</span>
+        </div>
+
+        <div class="timer" id="timer">00:00</div>
+
+        <p class="subtext" id="recordHint">
+          Allow microphone access when your browser asks. Speak naturally.
+        </p>
+
+        <div class="button-row">
+          <button class="btn btn-primary" id="startBtn" type="button">
+            ● Start recording
+          </button>
+          <button class="btn btn-secondary" id="stopBtn" type="button" disabled>
+            Stop recording
+          </button>
+          <button class="btn btn-light" id="resetBtn" type="button">
+            Reset session
+          </button>
+        </div>
+
+        <audio id="audioPlayer" class="audio-player hidden" controls></audio>
+
+        <div class="upload-row">
+          <label class="field-label" for="audioUpload">Or choose an audio file to play</label>
+          <input id="audioUpload" type="file" accept="audio/*">
+        </div>
+
+        <p class="subtext" style="margin-top:8px">
+          Uploaded audio can be played here. This browser-only version does not
+          automatically transcribe uploaded audio.
+        </p>
+      </div>
+
+      <div class="notice" id="supportNotice">
+        Live transcription depends on browser support. Chrome usually supports
+        the Web Speech API, but availability can vary. Your microphone recording
+        and transcript are processed locally in this page.
+      </div>
+    </section>
+
+    <section class="section" id="transcriptSection">
+      <div class="section-heading">
+        <div class="section-number">02</div>
+        <div>
+          <h2>Your transcript</h2>
+          <p class="subtext">
+            Your recognized words appear below. You can edit the text before analysing it.
+          </p>
+        </div>
+      </div>
+
+      <div class="transcript-tools">
+        <label class="field-label" for="transcript">Speech transcript</label>
+        <span class="word-counter" id="wordCounter">0 words</span>
+      </div>
+
+      <textarea class="field" id="transcript"
+        placeholder="Your speech will appear here while you speak. You can also paste or type your speech manually."
+        spellcheck="true"></textarea>
+
+      <div class="button-row">
+        <button class="btn btn-primary" id="analyseBtn" type="button">
+          Analyse my speech →
+        </button>
+        <button class="btn btn-secondary" id="sampleBtn" type="button">
+          Try sample speech
+        </button>
+        <button class="btn btn-secondary" id="clearTextBtn" type="button">
+          Clear transcript
+        </button>
+      </div>
+
+      <p class="subtext" style="margin-top:12px">
+        Tip: For meaningful feedback, use a complete speech rather than a single sentence.
+      </p>
+    </section>
+
+    <section class="section" id="reportSection">
+      <div class="section-heading">
+        <div class="section-number">03</div>
+        <div>
+          <h2>Your speaking report</h2>
+          <p class="subtext">A practical review of your words, pacing, and speech structure.</p>
+        </div>
+      </div>
+
+      <div class="analysis-intro">
+        <strong>What this report measures:</strong> text-based indicators such as
+        word count, repeated terms, possible filler words, sentence length,
+        vocabulary variety, and structure cues. These are estimates, not a
+        professional assessment of speaking ability.
+      </div>
+
+      <div id="reportContent">
+        <div class="empty-state">
+          Your report will appear here after you analyse a transcript.
+          Record a speech or type a few paragraphs to begin.
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="goalsSection">
+      <div class="section-heading">
+        <div class="section-number">04</div>
+        <div>
+          <h2>Your next-practice checklist</h2>
+          <p class="subtext">Pick a few specific actions to work on in your next attempt.</p>
+        </div>
+      </div>
+
+      <div class="goal-list" id="goalList">
+        <label class="goal">
+          <input type="checkbox">
+          <span>Start with one clear sentence explaining my main point.</span>
+        </label>
+        <label class="goal">
+          <input type="checkbox">
+          <span>Pause briefly between ideas instead of rushing.</span>
+        </label>
+        <label class="goal">
+          <input type="checkbox">
+          <span>Use examples to make at least one idea easier to understand.</span>
+        </label>
+        <label class="goal">
+          <input type="checkbox">
+          <span>Finish with a clear summary or conclusion.</span>
+        </label>
+      </div>
+    </section>
+
+    <footer class="footer">
+      Darpaan · A practice tool to help you reflect and improve.
+      Scores are heuristic estimates, not AI or expert evaluations.
+    </footer>
+  </main>
+  </div><!-- /appShell -->
+
+  <script>
+    const $ = id => document.getElementById(id);
+
+    const transcript = $("transcript");
+    const timer = $("timer");
+    const startBtn = $("startBtn");
+    const stopBtn = $("stopBtn");
+    const resetBtn = $("resetBtn");
+    const statusText = $("statusText");
+    const statusDot = $("statusDot");
+    const recordHint = $("recordHint");
+    const audioPlayer = $("audioPlayer");
+    const audioUpload = $("audioUpload");
+    const wordCounter = $("wordCounter");
+    const reportContent = $("reportContent");
+    const supportNotice = $("supportNotice");
+
+    let recognition = null;
+    let recording = false;
+    let startedAt = 0;
+    let elapsedBeforeStart = 0;
+    let elapsedSeconds = 0;
+    let timerInterval = null;
+    let mediaRecorder = null;
+    let mediaStream = null;
+    let audioChunks = [];
+    let recordingUrl = null;
+    let uploadedUrl = null;
+    let finalTranscript = "";
+    let audioBlob = null;
+
+    const sampleSpeech =
+      "Good morning everyone. Today I would like to talk about the importance of communication skills. " +
+      "In college, we often have to introduce ourselves, participate in group discussions, and present our ideas. " +
+      "I believe good communication is not only about speaking fluently, but also about listening carefully. " +
+      "For example, when we explain a difficult idea with a simple example, people can understand us better. " +
+      "First, we should organise our thoughts. Next, we should speak at a comfortable pace and use clear sentences. " +
+      "We can also improve by practising regularly and asking for feedback. " +
+      "To conclude, communication is a skill that grows with practice, patience, and confidence. Thank you.";
+
+    function getWords(text) {
+      return text.trim().match(/\b[\p{L}\p{N}]+(?:['’\-][\p{L}\p{N}]+)*\b/gu) || [];
+    }
+
+    function updateWordCount() {
+      const count = getWords(transcript.value).length;
+      wordCounter.textContent = `${count} ${count === 1 ? "word" : "words"}`;
+    }
+
+    transcript.addEventListener("input", updateWordCount);
+
+    function formatTime(seconds) {
+      const s = Math.max(0, Math.floor(seconds));
+      return String(Math.floor(s / 60)).padStart(2, "0") + ":" +
+             String(s % 60).padStart(2, "0");
+    }
+
+    function updateTimer() {
+      const current = recording
+        ? elapsedBeforeStart + (Date.now() - startedAt) / 1000
+        : elapsedSeconds;
+      timer.textContent = formatTime(current);
+    }
+
+    function setStatus(text, live = false) {
+      statusText.textContent = text;
+      statusDot.classList.toggle("live", live);
+    }
+
+    function cleanupStream() {
+      if (mediaStream) {
+        mediaStream.getTracks().forEach(track => track.stop());
+        mediaStream = null;
+      }
+    }
+
+    async function startRecording() {
+      if (recording) return;
+
+      if (!navigator.mediaDevices?.getUserMedia) {
+        setStatus("Microphone recording is not supported here");
+        recordHint.textContent =
+          "Try a current browser over localhost or HTTPS, and check microphone permissions.";
+        return;
+      }
+
+      startBtn.disabled = true;
+      setStatus("Requesting microphone access…");
+
+      try {
+        mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      } catch (error) {
+        startBtn.disabled = false;
+        setStatus("Microphone access was not granted");
+        recordHint.textContent =
+          "Allow microphone access in your browser settings, then try again.";
+        return;
+      }
+
+      audioChunks = [];
+      audioBlob = null;
+
+      try {
+        if (window.MediaRecorder) {
+          let options = {};
+          if (MediaRecorder.isTypeSupported("audio/webm;codecs=opus")) {
+            options.mimeType = "audio/webm;codecs=opus";
+          }
+          mediaRecorder = new MediaRecorder(mediaStream, options);
+
+          mediaRecorder.ondataavailable = event => {
+            if (event.data && event.data.size > 0) audioChunks.push(event.data);
+          };
+
+          mediaRecorder.onstop = () => {
+            if (audioChunks.length) {
+              audioBlob = new Blob(audioChunks, {
+                type: mediaRecorder?.mimeType || "audio/webm"
+              });
+
+              if (recordingUrl) URL.revokeObjectURL(recordingUrl);
+              recordingUrl = URL.createObjectURL(audioBlob);
+              audioPlayer.src = recordingUrl;
+              audioPlayer.classList.remove("hidden");
+            }
+          };
+
+          mediaRecorder.start();
+        }
+      } catch (error) {
+        mediaRecorder = null;
+      }
+
+      const SpeechRecognition =
+        window.SpeechRecognition || window.webkitSpeechRecognition;
+
+      if (SpeechRecognition) {
+        try {
+          recognition = new SpeechRecognition();
+          recognition.continuous = true;
+          recognition.interimResults = true;
+          recognition.lang = "en-IN";
+
+          finalTranscript = transcript.value.trim();
+          if (finalTranscript) finalTranscript += " ";
+
+          recognition.onresult = event => {
+            let interim = "";
+
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+              const result = event.results[i];
+              const words = result[0].transcript;
+
+              if (result.isFinal) {
+                finalTranscript += words + " ";
+              } else {
+                interim += words;
+              }
+            }
+
+            transcript.value = finalTranscript + interim;
+            updateWordCount();
+          };
+
+          recognition.onerror = event => {
+            if (event.error === "not-allowed") {
+              recordHint.textContent =
+                "Microphone or speech recognition permission was denied. Check browser permissions.";
+            } else if (event.error === "network") {
+              recordHint.textContent =
+                "Speech recognition reported a network error. Your audio may still be recorded.";
+            }
+          };
+
+          recognition.onend = () => {
+            if (recording && recognition) {
+              try { recognition.start(); } catch (error) {}
+            }
+          };
+
+          recognition.start();
+        } catch (error) {
+          recognition = null;
+        }
+      }
+
+      recording = true;
+      startedAt = Date.now();
+      startBtn.disabled = true;
+      stopBtn.disabled = false;
+      setStatus("Recording in progress", true);
+      recordHint.textContent = recognition
+        ? "Speak naturally. Your recognized words will appear in the transcript."
+        : "Your audio is being recorded. Live speech transcription is not supported in this browser.";
+
+      timerInterval = setInterval(updateTimer, 250);
+      updateTimer();
+    }
+
+    function stopRecording() {
+      if (!recording) return;
+
+      elapsedSeconds = elapsedBeforeStart + (Date.now() - startedAt) / 1000;
+      recording = false;
+
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = null;
+
+      try {
+        if (recognition) recognition.stop();
+      } catch (error) {}
+
+      recognition = null;
+
+      try {
+        if (mediaRecorder && mediaRecorder.state !== "inactive") {
+          mediaRecorder.stop();
+        }
+      } catch (error) {}
+
+      cleanupStream();
+
+      elapsedBeforeStart = 0;
+      startBtn.disabled = false;
+      stopBtn.disabled = true;
+      setStatus("Recording stopped");
+      recordHint.textContent =
+        "Review your transcript, make any corrections, then analyse your speech.";
+      updateTimer();
+      updateWordCount();
+    }
+
+    startBtn.addEventListener("click", startRecording);
+    stopBtn.addEventListener("click", stopRecording);
+
+    resetBtn.addEventListener("click", () => {
+      if (recording) stopRecording();
+
+      try {
+        if (recognition) recognition.stop();
+      } catch (error) {}
+
+      cleanupStream();
+
+      recording = false;
+      elapsedSeconds = 0;
+      elapsedBeforeStart = 0;
+      startedAt = 0;
+      finalTranscript = "";
+      audioChunks = [];
+      audioBlob = null;
+
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = null;
+
+      transcript.value = "";
+      $("topic").value = "";
+      updateWordCount();
+      timer.textContent = "00:00";
+      startBtn.disabled = false;
+      stopBtn.disabled = true;
+      setStatus("Ready when you are");
+      recordHint.textContent =
+        "Allow microphone access when your browser asks. Speak naturally.";
+
+      audioPlayer.pause();
+      audioPlayer.removeAttribute("src");
+      audioPlayer.classList.add("hidden");
+      audioPlayer.load();
+
+      if (recordingUrl) URL.revokeObjectURL(recordingUrl);
+      recordingUrl = null;
+
+      reportContent.innerHTML =
+        '<div class="empty-state">Your report will appear here after you analyse a transcript.</div>';
+
+      document.querySelectorAll("#goalList input").forEach(box => {
+        box.checked = false;
+        box.closest(".goal").classList.remove("done");
+      });
+    });
+
+    audioUpload.addEventListener("change", () => {
+      const file = audioUpload.files?.[0];
+      if (!file) return;
+
+      if (uploadedUrl) URL.revokeObjectURL(uploadedUrl);
+      uploadedUrl = URL.createObjectURL(file);
+      audioPlayer.src = uploadedUrl;
+      audioPlayer.classList.remove("hidden");
+      setStatus("Audio file ready to play");
+      recordHint.textContent =
+        "Uploaded audio can be played. Automatic transcription of imported audio is not included.";
+    });
+
+    $("sampleBtn").addEventListener("click", () => {
+      if (recording) stopRecording();
+      transcript.value = sampleSpeech;
+      $("topic").value = "Communication skills";
+      updateWordCount();
+      transcript.focus();
+    });
+
+    $("clearTextBtn").addEventListener("click", () => {
+      transcript.value = "";
+      finalTranscript = "";
+      updateWordCount();
+      transcript.focus();
+    });
+
+    // ---------- Transcript analysis ----------
+
+    const fillerTerms = [
+      "you know", "i mean", "kind of", "sort of", "basically",
+      "actually", "literally", "um", "uh", "erm", "hmm", "like",
+      "okay so", "to be honest"
+    ];
+
+    const transitionTerms = [
+      "first", "firstly", "second", "secondly", "next", "finally",
+      "for example", "for instance", "however", "therefore",
+      "on the other hand", "in addition", "because", "as a result"
+    ];
+
+    function escapeHTML(value) {
+      return String(value).replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      })[char]);
+    }
+
+    function termCount(text, term) {
+      const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const regex = new RegExp(
+        "(?<![\\p{L}\\p{N}])" + escaped + "(?![\\p{L}\\p{N}])",
+        "giu"
+      );
+      return [...text.matchAll(regex)].length;
+    }
+
+    function findRepeatedWords(words) {
+      const ignored = new Set([
+        "the", "and", "that", "this", "with", "from", "have", "your",
+        "you", "are", "was", "were", "for", "but", "not", "can", "could",
+        "would", "should", "will", "its", "our", "their", "they", "them",
+        "then", "than", "into", "about", "what", "when", "where", "which",
+        "who", "how", "all", "also", "just", "some", "more", "very",
+        "like", "because", "there", "here", "been", "being", "has", "had",
+        "did", "does", "youre", "im", "its", "one", "two", "first"
+      ]);
+
+      const counts = {};
+      words.forEach(word => {
+        const normal = word.toLowerCase().replace(/['’]/g, "");
+        if (normal.length > 3 && !ignored.has(normal)) {
+          counts[normal] = (counts[normal] || 0) + 1;
+        }
+      });
+
+      return Object.entries(counts)
+        .filter(([, count]) => count >= 3)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 8);
+    }
+
+    function sentenceStats(text) {
+      const sentences = text
+        .split(/[.!?]+/)
+        .map(s => s.trim())
+        .filter(Boolean);
+
+      const longSentences = sentences
+        .map(s => ({ text: s, words: getWords(s).length }))
+        .filter(s => s.words > 25);
+
+      const average = sentences.length
+        ? Math.round(getWords(text).length / sentences.length)
+        : 0;
+
+      return { sentences, longSentences, average };
+    }
+
+    function makeFeedback(type, icon, title, description) {
+      return `
+        <div class="feedback-item ${type}">
+          <div class="feedback-icon">${icon}</div>
+          <div>
+            <strong>${escapeHTML(title)}</strong>
+            <p>${escapeHTML(description)}</p>
+          </div>
+        </div>`;
+    }
+
+    function makeMetric(name, detail, value, percent) {
+      return `
+        <div class="metric">
+          <div>
+            <div class="metric-name">${escapeHTML(name)}</div>
+            <div class="metric-detail">${escapeHTML(detail)}</div>
+          </div>
+          <div class="bar"><div class="bar-fill" style="width:${percent}%"></div></div>
+          <div class="metric-value">${escapeHTML(value)}</div>
+        </div>`;
+    }
+
+    function analyseSpeech() {
+      const text = transcript.value.trim();
+      const words = getWords(text);
+      const count = words.length;
+
+      if (count < 8) {
+        reportContent.innerHTML = `
+          <div class="empty-state">
+            Please enter at least 8 words so Darpaan has enough text to review.
+            Try a complete introduction or a short paragraph.
+          </div>`;
+        $("reportSection").scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+
+      const lower = text.toLowerCase();
+      const sentences = sentenceStats(text);
+      const uniqueWords = new Set(words.map(w => w.toLowerCase())).size;
+      const vocabularyRatio = uniqueWords / Math.max(count, 1);
+      const vocabularyPercent = Math.round(vocabularyRatio * 100);
+
+      let fillerTotal = 0;
+      const fillerFound = [];
+
+      fillerTerms.forEach(term => {
+        const hits = termCount(text, term);
+        if (hits > 0) {
+          fillerTotal += hits;
+          fillerFound.push({ term, count: hits });
+        }
+      });
+
+      const transitionFound = transitionTerms.filter(term =>
+        termCount(text, term) > 0
+      );
+
+      const hasOpening = /\b(good morning|good afternoon|good evening|hello everyone|hi everyone|today i would like|i am here to|i'm here to|my name is)\b/i.test(text);
+
+      const hasConclusion = /\b(to conclude|in conclusion|to sum up|finally|thank you|that's all|that is all|overall)\b/i.test(text);
+
+      const hasExample = /\b(for example|for instance|such as|one example|imagine)\b/i.test(text);
+
+      const repeatedWords = findRepeatedWords(words);
+      const longSentenceCount = sentences.longSentences.length;
+
+      const duration = elapsedSeconds;
+      const pace = duration >= 10 ? Math.round(count / (duration / 60)) : null;
+
+      const fillerRate = fillerTotal / count;
+      const structurePoints = (hasOpening ? 1 : 0) +
+                              (hasConclusion ? 1 : 0) +
+                              (hasExample ? 1 : 0) +
+                              (transitionFound.length > 0 ? 1 : 0);
+
+      const fillerScore = Math.max(0, 100 - Math.min(100, fillerRate * 800));
+      const sentenceScore = Math.max(0, 100 - longSentenceCount * 16);
+      const vocabularyScore = Math.min(100, vocabularyPercent * 1.55);
+      const structureScore = structurePoints * 25;
+
+      const score = Math.round(
+        fillerScore * .25 +
+        sentenceScore * .25 +
+        vocabularyScore * .25 +
+        structureScore * .25
+      );
+
+      let scoreLabel = "A starting point";
+      let scoreDescription =
+        "Choose one or two areas below and practise them in your next attempt.";
+
+      if (score >= 85) {
+        scoreLabel = "Promising structure";
+        scoreDescription =
+          "Your text shows several useful communication patterns. Keep practising and review the suggestions below.";
+      } else if (score >= 70) {
+        scoreLabel = "Building momentum";
+        scoreDescription =
+          "There are some useful foundations here. A few targeted changes may make your speech easier to follow.";
+      } else if (score >= 50) {
+        scoreLabel = "Room to develop";
+        scoreDescription =
+          "Use the feedback as a practice checklist. Try organising your ideas and simplifying a few sentences.";
+      }
+
+      const metrics = [
+        makeMetric("Vocabulary variety",
+          "Unique words compared with total words",
+          `${vocabularyPercent}%`,
+          Math.min(100, vocabularyPercent)),
+        makeMetric("Sentence length",
+          "Average words per sentence",
+          `${sentences.average} words`,
+          Math.min(100, sentences.average * 3)),
+        makeMetric("Structure cues",
+          "Opening, example, transitions and conclusion",
+          `${structurePoints}/4`,
+          structureScore),
+        makeMetric("Possible filler phrases",
+          "Text matches only; context may change the meaning",
+          `${fillerTotal}`,
+          Math.max(0, 100 - Math.min(100, fillerTotal * 12)))
+      ].join("");
+
+      const feedback = [];
+
+      if (hasOpening) {
+        feedback.push(makeFeedback(
+          "good", "✓", "You have an opening cue",
+          "Your text includes an introductory phrase. Check that your first sentence clearly states the topic."
+        ));
+      } else {
+        feedback.push(makeFeedback(
+          "warn", "↗", "Make the opening more direct",
+          "Try starting with your main idea, a short question, or a one-sentence introduction to the topic."
+        ));
+      }
+
+      if (hasConclusion) {
+        feedback.push(makeFeedback(
+          "good", "✓", "A conclusion cue is present",
+          "Your text contains a possible closing phrase. Make sure it summarises the main message rather than introducing a new point."
+        ));
+      } else {
+        feedback.push(makeFeedback(
+          "warn", "↗", "Add a clear ending",
+          "Finish with one sentence that summarises your main point or tells the listener what you want them to remember."
+        ));
+      }
+
+      if (hasExample) {
+        feedback.push(makeFeedback(
+          "good", "✓", "You use an example cue",
+          "Examples can make abstract ideas easier to understand. Make sure the example supports the point you are making."
+        ));
+      } else {
+        feedback.push(makeFeedback(
+          "warn", "✎", "Make one idea more concrete",
+          "Add a real-life example, a brief situation, or a specific detail to help your listener understand your point."
+        ));
+      }
+
+      if (longSentenceCount > 0) {
+        feedback.push(makeFeedback(
+          "warn", "↗", "Review your longer sentences",
+          `${longSentenceCount} sentence(s) contain more than 25 words. Consider splitting them into smaller, clearer ideas.`
+        ));
+      } else {
+        feedback.push(makeFeedback(
+          "good", "✓", "No very long sentences detected",
+          "The text does not contain sentences over 25 words. Still, read it aloud to check that each sentence feels natural."
+        ));
+      }
+
+      if (fillerTotal > 0) {
+        feedback.push(makeFeedback(
+          "warn", "◌", "Review possible filler words",
+          `The detector found ${fillerTotal} match(es). Some uses may be perfectly natural, so review the transcript instead of treating every match as a mistake.`
+        ));
+      } else {
+        feedback.push(makeFeedback(
+          "good", "✓", "No listed filler phrases found",
+          "The detector did not find its listed phrases. This does not prove the spoken audio contains no fillers."
+        ));
+      }
+
+      if (transitionFound.length > 0) {
+        feedback.push(makeFeedback(
+          "good", "↔", "Some linking phrases are present",
+          "Transitions can help listeners follow your reasoning. Make sure each phrase introduces a real connection between ideas."
+        ));
+      } else {
+        feedback.push(makeFeedback(
+          "warn", "↔", "Connect your ideas more clearly",
+          "Try phrases such as “first”, “for example”, “however”, or “to conclude” where they genuinely fit."
+        ));
+      }
+
+      if (pace !== null) {
+        let paceMessage = "";
+        if (pace < 100) {
+          paceMessage = "This is a lower word rate. That may be comfortable and clear, or it may include long pauses.";
+        } else if (pace <= 160) {
+          paceMessage = "This falls within a commonly used conversational practice range. Your actual clarity also depends on pauses and pronunciation.";
+        } else {
+          paceMessage = "This is a relatively high word rate. Practise pausing between ideas and check whether every word is easy to follow.";
+        }
+
+        feedback.push(makeFeedback(
+          "good", "◷", `Estimated speaking rate: ${pace} words/min`,
+          paceMessage + " This estimate uses session duration, so silence and recording setup can affect it."
+        ));
+      } else {
+        feedback.push(makeFeedback(
+          "warn", "◷", "Speaking rate unavailable",
+          "Record for at least 10 seconds before stopping to estimate words per minute. Typed text alone cannot reveal speaking pace."
+        ));
+      }
+
+      const grammarNotes = [];
+
+      if (/\bi\b/.test(text) && !/\bI\b/.test(text)) {
+        grammarNotes.push(
+          "The pronoun “I” may need capitalization in one or more places."
+        );
+      }
+
+      if (/\s{2,}/.test(text)) {
+        grammarNotes.push(
+          "There are repeated spaces in the text. Check formatting if these were not intentional."
+        );
+      }
+
+      if (/\b(a|an)\s+[aeiou]/i.test(text)) {
+        grammarNotes.push(
+          "Check article usage around words starting with vowel letters. Sound, not just spelling, determines whether “a” or “an” is appropriate."
+        );
+      }
+
+      const grammarHTML = grammarNotes.length
+        ? grammarNotes.map(note => makeFeedback(
+            "warn", "✎", "Possible writing check", note
+          )).join("")
+        : makeFeedback(
+            "good", "✓", "No basic text flags found",
+            "The simple checks found no listed patterns to flag. This is not a complete grammar or language-quality assessment."
+          );
+
+      const fillerHTML = fillerFound.length
+        ? `<div class="tag-list">${fillerFound.map(item =>
+            `<span class="tag">${escapeHTML(item.term)} · ${item.count}</span>`
+          ).join("")}</div>`
+        : '<div class="empty-state">No listed filler terms detected in this transcript.</div>';
+
+      const repeatedHTML = repeatedWords.length
+        ? `<div class="tag-list">${repeatedWords.map(([word, number]) =>
+            `<span class="tag">${escapeHTML(word)} · ${number} times</span>`
+          ).join("")}</div>`
+        : '<div class="empty-state">No prominent repeated content words detected.</div>';
+
+      const transitionHTML = transitionFound.length
+        ? `<div class="tag-list">${transitionFound.map(term =>
+            `<span class="tag">${escapeHTML(term)}</span>`
+          ).join("")}</div>`
+        : '<div class="empty-state">No listed transition phrases detected. Other transitions may still be present.</div>';
+
+      const improvementPlan = [];
+
+      if (!hasOpening) {
+        improvementPlan.push("Write one opening sentence that states your main point.");
+      }
+
+      if (longSentenceCount > 0) {
+        improvementPlan.push("Rewrite one long sentence as two shorter sentences.");
+      }
+
+      if (fillerTotal > 0) {
+        improvementPlan.push("Review the flagged words and practise replacing unnecessary ones with a short pause.");
+      }
+
+      if (!hasExample) {
+        improvementPlan.push("Add one relevant example to support a key point.");
+      }
+
+      if (!hasConclusion) {
+        improvementPlan.push("Write a final sentence that brings the speech back to its main message.");
+      }
+
+      if (repeatedWords.length > 0) {
+        improvementPlan.push("Review repeated content words and replace only those that sound repetitive in context.");
+      }
+
+      if (improvementPlan.length === 0) {
+        improvementPlan.push("Practise delivering the same speech again, focusing on natural pauses and clear emphasis.");
+        improvementPlan.push("Ask a listener what they remember most from your speech.");
+      }
+
+      const planHTML = improvementPlan.map((item, index) => `
+        <label class="goal">
+          <input type="checkbox">
+          <span><strong>Step ${index + 1}.</strong> ${escapeHTML(item)}</span>
+        </label>`).join("");
+
+      reportContent.innerHTML = `
+        <div class="score-panel">
+          <div class="score-circle">
+            <span class="score-value">${score}</span>
+            <span class="score-out-of">out of 100</span>
+          </div>
+          <div class="score-copy">
+            <h3>${escapeHTML(scoreLabel)}</h3>
+            <p>${escapeHTML(scoreDescription)}</p>
+            <p style="margin-top:10px;font-size:12px;opacity:.8">
+              Practice indicator only · Based on text heuristics, not an AI judgement.
+            </p>
+          </div>
+        </div>
+
+        <div class="report-block">
+          <h3>Speaking snapshot</h3>
+          <div class="metric-list">
+            ${makeMetric("Word count", "Words in your transcript", `${count}`, Math.min(100, count / 2))}
+            ${makeMetric("Sentence count", "Sentences separated by punctuation", `${sentences.sentences.length}`, Math.min(100, sentences.sentences.length * 5))}
+            ${metrics}
+          </div>
+        </div>
+
+        <div class="report-block">
+          <h3>What you can improve</h3>
+          <div class="feedback-list">${feedback.join("")}</div>
+        </div>
+
+        <div class="report-block">
+          <h3>Possible filler words and phrases</h3>
+          <p class="subtext">These matches are based on text. Words such as “like” can be meaningful and should not automatically be removed.</p>
+          ${fillerHTML}
+        </div>
+
+        <div class="report-block">
+          <h3>Repeated content words</h3>
+          <p class="subtext">Repeated words are not always a problem. Check whether they help your message or make the delivery feel repetitive.</p>
+          ${repeatedHTML}
+        </div>
+
+        <div class="report-block">
+          <h3>Linking phrases detected</h3>
+          ${transitionHTML}
+        </div>
+
+        <div class="report-block">
+          <h3>Basic writing checks</h3>
+          <p class="subtext">These are limited pattern checks, not full grammar correction.</p>
+          <div class="feedback-list">${grammarHTML}</div>
+        </div>
+
+        <div class="report-block">
+          <h3>Your suggested practice plan</h3>
+          <div class="goal-list">${planHTML}</div>
+        </div>
+
+        <div class="notice">
+          Important limitation: this version does not truly understand the meaning
+          of your speech and does not measure vocal confidence, pitch, emotion,
+          pronunciation accuracy, or body language. Those features require more
+          advanced speech or video analysis.
+        </div>
+      `;
+
+      savePracticeSession(score, count);
+
+      $("reportSection").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+
+      // Mark checklist items visually when checked.
+      reportContent.querySelectorAll(".goal input").forEach(box => {
+        box.addEventListener("change", () => {
+          box.closest(".goal").classList.toggle("done", box.checked);
+        });
+      });
+    }
+
+    $("analyseBtn").addEventListener("click", analyseSpeech);
+
+    document.querySelectorAll("#goalList input").forEach(box => {
+      box.addEventListener("change", () => {
+        box.closest(".goal").classList.toggle("done", box.checked);
+      });
+    });
+
+    if (!(window.SpeechRecognition || window.webkitSpeechRecognition)) {
+      supportNotice.textContent =
+        "This browser may not support live speech transcription. You can still record audio, type or paste a transcript, and use the analysis features.";
+    }
+
+    window.addEventListener("beforeunload", () => {
+      cleanupStream();
+      if (recordingUrl) URL.revokeObjectURL(recordingUrl);
+      if (uploadedUrl) URL.revokeObjectURL(uploadedUrl);
+    });
+
+    // ---------- Darpaan account, dashboard and streaks ----------
+    const AUTH_USERS_KEY = "darpaan_users_v1";
+    const AUTH_SESSION_KEY = "darpaan_session_v1";
+    let authMode = "login";
+    let currentUser = null;
+    const localDateKey = (date = new Date()) => { const y=date.getFullYear();const m=String(date.getMonth()+1).padStart(2,"0");const d=String(date.getDate()).padStart(2,"0");return `${y}-${m}-${d}`; };
+    const readUsers = () => { try { return JSON.parse(localStorage.getItem(AUTH_USERS_KEY) || "{}"); } catch(e) { return {}; } };
+    async function passwordDigest(value) { if(window.crypto&&crypto.subtle){const bytes=new TextEncoder().encode(value);const hash=await crypto.subtle.digest("SHA-256",bytes);return Array.from(new Uint8Array(hash)).map(b=>b.toString(16).padStart(2,"0")).join("");}return btoa(unescape(encodeURIComponent(value))); }
+    function userStoreKey(email) { return "darpaan_data_"+email.toLowerCase().trim(); }
+    function getUserData() { try { return JSON.parse(localStorage.getItem(userStoreKey(currentUser.email)) || '{"sessions":[],"bestStreak":0}'); } catch(e) { return {sessions:[],bestStreak:0}; } }
+    function setUserData(data) { localStorage.setItem(userStoreKey(currentUser.email),JSON.stringify(data)); }
+    function showApp(user) { currentUser=user;localStorage.setItem(AUTH_SESSION_KEY,JSON.stringify(user));$("authScreen").classList.add("hidden");$("appShell").classList.remove("hidden");$("userChip").textContent=user.name;$("welcomeTitle").textContent=`Welcome back, ${user.name.split(" ")[0]}!`;renderDashboard(); }
+    function showAuth() { $("appShell").classList.add("hidden");$("authScreen").classList.remove("hidden"); }
+    function setAuthMode(mode) { authMode=mode;const signup=mode==="signup";$("loginTab").classList.toggle("active",!signup);$("signupTab").classList.toggle("active",signup);$("nameField").classList.toggle("hidden",!signup);$("authTitle").textContent=signup?"Create your Darpaan account":"Welcome to Darpaan";$("authSubtitle").textContent=signup?"Set up your space and start building your speaking habit.":"Sign in to continue your speaking journey.";$("authSubmit").textContent=signup?"Create my account →":"Log in to Darpaan →";$("authPassword").setAttribute("autocomplete",signup?"new-password":"current-password");$("authMessage").textContent=""; }
+    $("loginTab").addEventListener("click",()=>setAuthMode("login"));$("signupTab").addEventListener("click",()=>setAuthMode("signup"));
+    $("authForm").addEventListener("submit",async event=>{event.preventDefault();const email=$("authEmail").value.trim().toLowerCase();const password=$("authPassword").value;const users=readUsers();$("authMessage").textContent="";if(authMode==="signup"){const name=$("authName").value.trim();if(!name){$("authMessage").textContent="Please enter your name.";return;}if(users[email]){$("authMessage").textContent="An account with this email already exists. Please log in.";return;}users[email]={name,passwordHash:await passwordDigest(password)};localStorage.setItem(AUTH_USERS_KEY,JSON.stringify(users));localStorage.setItem(userStoreKey(email),JSON.stringify({sessions:[],bestStreak:0}));showApp({name,email});}else{const account=users[email];if(!account||account.passwordHash!==await passwordDigest(password)){$("authMessage").textContent="Email or password is incorrect. If you are new, create an account first.";return;}showApp({name:account.name,email});}});
+    $("logoutBtn").addEventListener("click",()=>{if(recording)stopRecording();localStorage.removeItem(AUTH_SESSION_KEY);currentUser=null;$("authForm").reset();setAuthMode("login");showAuth();});
+    function streakFromDates(dates){const set=new Set(dates);let streak=0;let cursor=new Date();cursor.setHours(12,0,0,0);if(!set.has(localDateKey(cursor))){cursor.setDate(cursor.getDate()-1);if(!set.has(localDateKey(cursor)))return 0;}while(set.has(localDateKey(cursor))){streak++;cursor.setDate(cursor.getDate()-1);}return streak;}
+    function renderDashboard(){if(!currentUser)return;const data=getUserData();const sessions=data.sessions||[];const dates=[...new Set(sessions.map(s=>s.date))].sort();const streak=streakFromDates(dates);let best=0,run=0,prev=null;dates.forEach(d=>{const dt=new Date(d+"T12:00:00");if(prev){const diff=(dt-prev)/86400000;run=diff===1?run+1:1;}else run=1;best=Math.max(best,run);prev=dt;});data.bestStreak=Math.max(data.bestStreak||0,best);setUserData(data);$("currentStreak").textContent=`${streak} ${streak===1?"day":"days"}`;$("streakCaption").textContent=streak?"You are on a roll. Keep it going!":"Complete a practice today to begin.";$("totalSessions").textContent=sessions.length;$("bestStreak").textContent=data.bestStreak||0;$("averageScore").textContent=sessions.length?Math.round(sessions.reduce((sum,s)=>sum+s.score,0)/sessions.length):"—";const today=new Date();const mondayOffset=(today.getDay()+6)%7;const monday=new Date(today);monday.setDate(today.getDate()-mondayOffset);const labels=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];$("weekRow").innerHTML=labels.map((label,i)=>{const day=new Date(monday);day.setDate(monday.getDate()+i);const key=localDateKey(day);const done=dates.includes(key);const isToday=key===localDateKey();return `<div class="day-cell">${label}<div class="day-dot ${done?"done":""} ${isToday?"today":""}">${done?"✓":day.getDate()}</div></div>`;}).join("");const recent=[...sessions].reverse().slice(0,4);$("activityList").innerHTML=recent.length?recent.map(s=>`<div class="activity-item"><div><strong>${escapeHTML(s.topic||"Speaking practice")}</strong><span>${new Date(s.createdAt).toLocaleDateString(undefined,{day:"numeric",month:"short"})} · ${s.words} words</span></div><strong>${s.score}/100</strong></div>`).join(""):'<div class="dash-empty">Your completed sessions will appear here after you analyse your first speech.</div>';}
+    function savePracticeSession(score,wordCount){if(!currentUser)return;const data=getUserData();data.sessions.push({date:localDateKey(),createdAt:new Date().toISOString(),topic:$("topic").value.trim()||"Speaking practice",score,words:wordCount});setUserData(data);renderDashboard();}
+    try{const saved=JSON.parse(localStorage.getItem(AUTH_SESSION_KEY)||"null");const accounts=readUsers();if(saved&&accounts[saved.email])showApp(saved);}catch(e){}
+
+  </script>
+</body>
+</html>
